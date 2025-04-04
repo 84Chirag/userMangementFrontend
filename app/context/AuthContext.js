@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { getImageUrl } from '../utils/api';
 
 // Use proxy URL
+// const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 const API_URL = '/api';
 
 export const AuthContext = createContext();

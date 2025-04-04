@@ -1,17 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', '192.168.0.124'],
+    domains: ['localhost', '192.168.0.124', 'usermangementbackend-5hfa.onrender.com'],
   },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5000/api/:path*', // Proxy to Backend
+        destination: process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/:path*` : 'http://localhost:5000/api/:path*',
       },
       {
         source: '/uploads/:path*',
-        destination: 'http://localhost:5000/uploads/:path*', // Proxy for image uploads
+        destination: process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/uploads/:path*` : 'http://localhost:5000/uploads/:path*',
       },
     ];
   },
@@ -27,7 +27,7 @@ const nextConfig = {
           },
           {
             key: 'Access-Control-Allow-Origin',
-            value: '*',
+            value: 'https://usermangementbackend-5hfa.onrender.com',
           },
           {
             key: 'Access-Control-Allow-Methods',
