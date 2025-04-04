@@ -8,13 +8,14 @@ import { AuthContext } from '../context/AuthContext';
 import { getCities, getEducationOptions } from '../utils/api';
 
 const SignupForm = () => {
-  const { register: registerUser, registerError, loading } = useContext(AuthContext);
+  const { register: registerUser, registerError, setRegisterError, loading } = useContext(AuthContext);
   const [cities, setCities] = useState([]);
   const [educationOptions, setEducationOptions] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
   const [step, setStep] = useState(1); // For multi-step form
-  
+  const [showAlert, setShowAlert] = useState(false);
+
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const router = useRouter();
 
@@ -29,17 +30,29 @@ const SignupForm = () => {
     fetchOptions();
   }, []);
 
+  useEffect(() => {
+    if (setRegisterError) {
+      const timer = setTimeout(() => {
+        setRegisterError(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [setRegisterError]);
+
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    
+
     if (files.length !== 4) {
-      alert('Please select exactly 4 images');
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
       e.target.value = null; // Reset the input
       return;
     }
-    
+
     setImageFiles(files);
-    
+
     // Create preview URLs
     const previews = files.map(file => URL.createObjectURL(file));
     setImagePreview(previews);
@@ -48,17 +61,20 @@ const SignupForm = () => {
   const onSubmit = async (data) => {
     // Check for 4 images requirement
     if (imageFiles.length !== 4) {
-      alert('Please upload exactly 4 images');
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
       return;
     }
-    
+
     // Add images to the data
     const formData = {
       ...data,
       images: imageFiles,
       education: data.education // Single education value now
     };
-    
+
     try {
       await registerUser(formData);
       // Form will be handled by the AuthContext navigation
@@ -97,14 +113,14 @@ const SignupForm = () => {
                 <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>
               )}
             </div>
-            
+
             {/* Email */}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-medium mb-1">Email</label>
               <input
                 type="email"
                 placeholder="your.email@example.com"
-                {...register('email', { 
+                {...register('email', {
                   required: 'Email is required',
                   pattern: {
                     value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -117,7 +133,7 @@ const SignupForm = () => {
                 <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
               )}
             </div>
-            
+
             {/* Phone Number */}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-medium mb-1">Phone Number</label>
@@ -131,14 +147,14 @@ const SignupForm = () => {
                 <p className="text-red-500 text-xs mt-1">{errors.phoneNumber.message}</p>
               )}
             </div>
-            
+
             {/* Password */}
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-medium mb-1">Password</label>
               <input
                 type="password"
                 placeholder="Create a secure password"
-                {...register('password', { 
+                {...register('password', {
                   required: 'Password is required',
                   minLength: {
                     value: 6,
@@ -156,7 +172,7 @@ const SignupForm = () => {
               <button
                 type="button"
                 onClick={nextStep}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer"
               >
                 Next
               </button>
@@ -167,7 +183,7 @@ const SignupForm = () => {
         return (
           <>
             <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
-            
+
             {/* Gender */}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-medium mb-1">Gender</label>
@@ -177,40 +193,40 @@ const SignupForm = () => {
                     type="radio"
                     value="male"
                     {...register('gender', { required: 'Gender is required' })}
-                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500"
+                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 cursor-pointer"
                   />
-                  <span className="text-sm text-gray-700">Male</span>
+                  <span className="text-sm text-gray-700 cursor-pointer">Male</span>
                 </label>
                 <label className="flex items-center">
                   <input
                     type="radio"
                     value="female"
                     {...register('gender', { required: 'Gender is required' })}
-                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500"
+                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 cursor-pointer"
                   />
-                  <span className="text-sm text-gray-700">Female</span>
+                  <span className="text-sm text-gray-700 cursor-pointer">Female</span>
                 </label>
                 <label className="flex items-center">
                   <input
                     type="radio"
                     value="other"
                     {...register('gender', { required: 'Gender is required' })}
-                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500"
+                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 cursor-pointer"
                   />
-                  <span className="text-sm text-gray-700">Other</span>
+                  <span className="text-sm text-gray-700 cursor-pointer">Other</span>
                 </label>
               </div>
               {errors.gender && (
                 <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>
               )}
             </div>
-            
+
             {/* City */}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-medium mb-1">City</label>
               <select
                 {...register('city', { required: 'City is required' })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
               >
                 <option value="">Select your city</option>
                 {cities.map((city) => (
@@ -223,10 +239,10 @@ const SignupForm = () => {
                 <p className="text-red-500 text-xs mt-1">{errors.city.message}</p>
               )}
             </div>
-            
+
             {/* Education */}
             <div className="mb-6">
-              <label className="block text-gray-700 text-sm font-medium mb-2">Education (Select one)</label>
+              <label className="block text-gray-700 text-sm font-medium mb-2">Education</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto border border-gray-200 rounded-md p-3">
                 {educationOptions.map((option) => (
                   <label key={option} className="flex items-center">
@@ -234,9 +250,9 @@ const SignupForm = () => {
                       type="radio"
                       value={option}
                       {...register('education', { required: 'Education is required' })}
-                      className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500"
+                      className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 cursor-pointer"
                     />
-                    <span className="text-sm text-gray-700">{option}</span>
+                    <span className="text-sm text-gray-700 cursor-pointer">{option}</span>
                   </label>
                 ))}
               </div>
@@ -249,14 +265,14 @@ const SignupForm = () => {
               <button
                 type="button"
                 onClick={prevStep}
-                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 cursor-pointer"
               >
                 Back
               </button>
               <button
                 type="button"
                 onClick={nextStep}
-                className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer"
               >
                 Next
               </button>
@@ -267,7 +283,7 @@ const SignupForm = () => {
         return (
           <>
             <h3 className="text-lg font-semibold mb-4">Profile Images</h3>
-            
+
             {/* Images */}
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-medium mb-2">
@@ -291,21 +307,21 @@ const SignupForm = () => {
                   <span className="mt-1 text-xs text-gray-500">Please select exactly 4 images</span>
                 </label>
               </div>
-              
+
               {imagePreview.length > 0 && (
                 <div className="mt-4">
                   <p className="text-sm font-medium text-gray-700 mb-2">Selected Images:</p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {imagePreview.map((src, index) => (
                       <div key={index} className="relative group">
-                        <img 
-                          src={src} 
-                          alt={`Preview ${index + 1}`} 
+                        <img
+                          src={src}
+                          alt={`Preview ${index + 1}`}
                           className="w-full h-24 object-cover rounded-md border border-gray-200"
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-md">
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             onClick={() => {
                               setImagePreview(prev => prev.filter((_, i) => i !== index));
                               setImageFiles(prev => {
@@ -332,13 +348,13 @@ const SignupForm = () => {
               <button
                 type="button"
                 onClick={prevStep}
-                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 cursor-pointer"
               >
                 Back
               </button>
               <button
                 type="submit"
-                className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer"
                 disabled={loading || imageFiles.length === 0}
               >
                 {loading ? 'Creating Account...' : 'Sign Up'}
@@ -355,7 +371,7 @@ const SignupForm = () => {
     <div className="bg-white p-8 rounded-lg shadow-xl max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">Create Your Account</h2>
       <p className="text-gray-600 text-center mb-6">Please fill in your information below</p>
-      
+
       {/* Progress bar */}
       <div className="mb-6">
         <div className="flex justify-between mb-1">
@@ -372,7 +388,7 @@ const SignupForm = () => {
           ></div>
         </div>
       </div>
-      
+
       {registerError && (
         <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
           <div className="flex">
@@ -387,18 +403,29 @@ const SignupForm = () => {
           </div>
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {renderFormStep()}
       </form>
-      
+
       <p className="mt-6 text-center text-sm text-gray-600">
         Already have an account?{' '}
         <Link href="/login" className="text-blue-600 hover:underline font-medium">
           Log In
         </Link>
       </p>
+      {showAlert && (
+        <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-red-200 rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 className="text-xl font-bold text-center text-gray-900 mb-4">Select Image</h3>
+            <p className="text-gray-700 mb-6 text-center">
+              Please upload exactly 4 images.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
+
   );
 };
 

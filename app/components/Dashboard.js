@@ -412,13 +412,13 @@ const Dashboard = () => {
           <div className="flex space-x-3">
             <button
               onClick={() => setShowDeleteModal(true)}
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 font-medium"
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 font-medium cursor-pointer"
             >
               Delete Account
             </button>
             <button
               onClick={logout}
-              className="bg-white text-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-50 transition duration-300 font-medium"
+              className="bg-white text-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-50 transition duration-300 font-medium cursor-pointer"
             >
               Logout
             </button>
@@ -431,7 +431,7 @@ const Dashboard = () => {
         <div className="flex">
           <button
             onClick={() => setActiveTab('profile')}
-            className={`px-6 py-3 font-medium ${
+            className={`px-6 py-3 font-medium cursor-pointer ${
               activeTab === 'profile'
                 ? 'border-b-2 border-indigo-600 text-indigo-600'
                 : 'text-gray-500 hover:text-gray-700'
@@ -441,7 +441,7 @@ const Dashboard = () => {
           </button>
           <button
             onClick={() => setActiveTab('images')}
-            className={`px-6 py-3 font-medium ${
+            className={`px-6 py-3 font-medium cursor-pointer ${
               activeTab === 'images'
                 ? 'border-b-2 border-indigo-600 text-indigo-600'
                 : 'text-gray-500 hover:text-gray-700'
@@ -664,13 +664,13 @@ const Dashboard = () => {
               <button
                 type="button"
                 onClick={() => setIsEditing(false)}
-                className="px-6 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 font-medium"
+                className="px-6 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 font-medium cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
+                className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium cursor-pointer"
                 disabled={updateLoading}
               >
                 {updateLoading ? (
@@ -766,7 +766,7 @@ const Dashboard = () => {
                       }
                       setIsEditing(true);
                     }}
-                    className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium mt-2"
+                    className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium mt-2 cursor-pointer"
                   >
                     Edit Profile
                   </button>
@@ -847,7 +847,7 @@ const Dashboard = () => {
                       }
                       setIsEditing(true);
                     }}
-                    className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
+                    className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium cursor-pointer"
                   >
                     Update Images
                   </button>
