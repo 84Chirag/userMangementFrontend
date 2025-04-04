@@ -31,7 +31,7 @@ export default function LoginPage() {
 
   // Show login form if user is not logged in
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12 px-4 sm:px-6 lg:px-8 responsive-container">
       <div className="absolute top-0 right-0 h-96 w-full bg-gradient-to-bl from-blue-400 to-indigo-500 rounded-br-3xl -z-10 opacity-10"></div>
       
       <div className="mb-6 flex justify-center">
@@ -62,7 +62,7 @@ export default function LoginPage() {
         </div>
       )}
       
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto responsive-max-w">
         <LoginForm />
       </div>
     </div>

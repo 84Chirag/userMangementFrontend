@@ -24,7 +24,7 @@ const LoginForm = () => {
   }, [setLoginError]);
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-xl max-w-md mx-auto">
+    <div className="bg-white p-8 rounded-lg shadow-xl max-w-md mx-auto responsive-form">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-gray-800">Welcome Back</h2>
         <p className="text-gray-600 mt-2">Sign in to your account</p>
@@ -107,7 +107,7 @@ const LoginForm = () => {
           )}
         </div>
         
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap responsive-flex-col-mobile">
           <div className="flex items-center">
             <input
               id="remember-me"
@@ -120,7 +120,7 @@ const LoginForm = () => {
             </label>
           </div>
           
-          <div className="text-sm">
+          <div className="text-sm responsive-mt-mobile">
             <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
               Forgot your password?
             </a>
@@ -165,7 +165,7 @@ const LoginForm = () => {
           </div>
         </div>
         
-        <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="mt-6 grid grid-cols-2 gap-3 responsive-grid">
           <button
             type="button"
             className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"

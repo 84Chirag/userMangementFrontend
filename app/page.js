@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="py-12">
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 responsive-container responsive-max-w">
         <div className="absolute top-0 right-0 h-96 w-full bg-gradient-to-bl from-blue-400 to-indigo-500 rounded-br-3xl -z-10 opacity-10"></div>
         
         <div className="py-16 sm:py-24">
@@ -34,11 +34,11 @@ export default function Home() {
               A complete user management system with secure authentication.
             </p>
             
-            <div className="mt-10 flex justify-center gap-4">
+            <div className="mt-10 flex justify-center gap-4 flex-wrap responsive-flex-col-mobile">
               {user ? (
                 <Link 
                   href="/dashboard" 
-                  className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                  className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 responsive-w-full-mobile"
                 >
                   Go to Dashboard
                 </Link>
@@ -46,13 +46,13 @@ export default function Home() {
                 <>
                   <Link
                     href="/signup"
-                    className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                    className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 responsive-w-full-mobile"
                   >
                     Get Started
                   </Link>
                   <Link
                     href="/login"
-                    className="px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+                    className="px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 responsive-w-full-mobile"
                   >
                     Log In
                   </Link>
@@ -64,7 +64,7 @@ export default function Home() {
         
         {/* Features section */}
         <div className="py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 responsive-grid">
             <div className="p-6 bg-white rounded-lg shadow-md">
               <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">

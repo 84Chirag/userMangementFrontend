@@ -368,7 +368,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-xl max-w-md mx-auto">
+    <div className="bg-white p-8 rounded-lg shadow-xl max-w-md mx-auto responsive-form">
       <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">Create Your Account</h2>
       <p className="text-gray-600 text-center mb-6">Please fill in your information below</p>
 
@@ -404,28 +404,35 @@ const SignupForm = () => {
         </div>
       )}
 
+      {/* Image alert */}
+      {showAlert && (
+        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-yellow-700">Please upload exactly 4 images</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {renderFormStep()}
       </form>
 
-      <p className="mt-6 text-center text-sm text-gray-600">
-        Already have an account?{' '}
-        <Link href="/login" className="text-blue-600 hover:underline font-medium">
-          Log In
-        </Link>
-      </p>
-      {showAlert && (
-        <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-red-200 rounded-lg p-6 w-full max-w-md mx-4">
-            <h3 className="text-xl font-bold text-center text-gray-900 mb-4">Select Image</h3>
-            <p className="text-gray-700 mb-6 text-center">
-              Please upload exactly 4 images.
-            </p>
-          </div>
-        </div>
-      )}
+      <div className="mt-8 text-center">
+        <p className="text-sm text-gray-600">
+          Already have an account?{' '}
+          <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500">
+            Sign in
+          </Link>
+        </p>
+      </div>
     </div>
-
   );
 };
 
